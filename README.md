@@ -2,7 +2,7 @@
 
 # Fullstack Todo Application with Next.js
 
-![Todo App Screenshot](/public/2025-08-14.png) 
+![App Todo Screenshot](/public/2025-08-14.png) 
 
 A modern, responsive todo application built with Next.js featuring full CRUD functionality, API routes, and dark mode support.
 
@@ -48,7 +48,7 @@ A modern, responsive todo application built with Next.js featuring full CRUD fun
    cd todo-app
 
 
-  todo-app/
+  app-todo/
 ├── app/
 │   ├── api/               # API routes
 │   ├── todos/             # Todo pages
@@ -80,5 +80,5 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 Contact
 Mitchelle Musarurwa - www.linkedin.com/in/mitchelle-musarurwa-423265298 - shanellmusarurwa6@gmail.com
 
-Project Link: https://github.com/shanellmusarurwa/Fullstacks--todo
+Project Link: https://github.com/shanellmusarurwa/Fullstack-task
 
