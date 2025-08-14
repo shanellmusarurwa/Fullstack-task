@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+
+html {
+  transition: color 200ms ease, background-color 200ms ease;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+body:not(.using-keyboard) a:focus,
+body:not(.using-keyboard) button:focus {
+  outline: none;
+}
+
+
+body.using-keyboard a:focus,
+body.using-keyboard button:focus {
+  outline: 2px solid theme('colors.purple.500');
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
