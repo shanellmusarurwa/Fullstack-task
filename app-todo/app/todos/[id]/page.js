@@ -1,18 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { use } from 'react'; // Required for params handling
+import { use } from 'react';
 import { useRouter } from 'next/navigation';
 import TodoForm from '../../components/TodoForm';
 import Link from 'next/link';
 
 export default function TodoDetailPage({ params: paramsPromise }) {
-  // Proper params handling in Next.js 15.4.6+
   const params = use(paramsPromise);
   const id = params.id;
 
   const [todo, setTodo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -24,6 +24,9 @@ export default function TodoDetailPage({ params: paramsPromise }) {
     const fetchTodo = async () => {
       try {
         const response = await fetch(`/api/todos`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const todos = await response.json();
         const foundTodo = todos.find(t => t.id === id);
         
@@ -34,7 +37,7 @@ export default function TodoDetailPage({ params: paramsPromise }) {
         }
       } catch (error) {
         console.error('Error fetching todo:', error);
-        router.push('/todos');
+        setError('Failed to load todo');
       } finally {
         setLoading(false);
       }
@@ -55,6 +58,14 @@ export default function TodoDetailPage({ params: paramsPromise }) {
     );
   }
 
+  if (error) {
+    return (
+      <div className="p-4 text-center text-red-500 dark:text-red-400">
+        {error}
+      </div>
+    );
+  }
+
   if (!todo) {
     return (
       <div className="p-4 text-center text-red-500 dark:text-red-400">
@@ -63,7 +74,6 @@ export default function TodoDetailPage({ params: paramsPromise }) {
     );
   }
 
-  // Server-client consistent date formatting
   const formattedDate = new Date(todo.createdAt).toLocaleString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -85,10 +95,16 @@ export default function TodoDetailPage({ params: paramsPromise }) {
           completed: todo.completed
         }),
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setTodo(data);
     } catch (error) {
       console.error('Error updating todo:', error);
+      alert('Failed to update todo. Please try again.');
     }
   };
 
@@ -106,15 +122,21 @@ export default function TodoDetailPage({ params: paramsPromise }) {
           completed: !todo.completed
         }),
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setTodo(data);
     } catch (error) {
       console.error('Error toggling todo:', error);
+      alert('Failed to update todo status. Please try again.');
     }
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-2xlmin-h-[calc(100dvh-200px)] ">
+    <div className="container mx-auto p-4 max-w-2xl min-h-[calc(100dvh-200px)]">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Todo Details</h1>
         <Link 
