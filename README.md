@@ -82,3 +82,7 @@ Mitchelle Musarurwa - www.linkedin.com/in/mitchelle-musarurwa-423265298 - shanel
 
 Project Link: https://github.com/shanellmusarurwa/Fullstack-task
 
+VERCEL LINK
+
+https://app-todo-sooty.vercel.app/
+
